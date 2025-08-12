@@ -2,7 +2,8 @@ console.log(
     '%cbuild from PakePlus： https://github.com/Sjj1024/PakePlus',
     'color:orangered;font-weight:bolder'
 )
-// 替换为非阻塞的自定义弹窗
+
+// 非阻塞自定义通知函数
 function showNotice(message, delay = 0) {
   setTimeout(() => {
     const notice = document.createElement('div');
@@ -13,38 +14,35 @@ function showNotice(message, delay = 0) {
     `;
     notice.textContent = message;
     document.body.appendChild(notice);
-    setTimeout(() => notice.remove(), 3000); // 3秒后自动消失
+    setTimeout(() => notice.remove(), 15000); // 15秒后自动消失
   }, delay);
 }
 
-// 页面加载后显示通知（非阻塞）
-showNotice("这是一个提醒通知！", 1000); // 延迟1秒显示
+// 页面加载相关通知
+showNotice("注册之后搜索hhj,选择传说中的管理员,获取帮助", 4000);
 document.addEventListener('DOMContentLoaded', () => {
-  showNotice('页面加载完成！', 500); // 延迟0.5秒显示
+  showNotice('页面加载完成！', 500);
 });
-// very important, if you don't know what it is, don't touch it
-// 非常重要，不懂代码不要动，这里可以解决80%的问题，也可以生产1000+的bug
+
+
+// 链接跳转控制（阻止新窗口打开）
 const hookClick = (e) => {
     const origin = e.target.closest('a')
-    const isBaseTargetBlank = document.querySelector(
-        'head base[target="_blank"]'
-    )
-    console.log('origin', origin, isBaseTargetBlank)
+    const isBaseTargetBlank = document.querySelector('head base[target="_blank"]')
+    
     if (
         (origin && origin.href && origin.target === '_blank') ||
         (origin && origin.href && isBaseTargetBlank)
     ) {
         e.preventDefault()
-        console.log('handle origin', origin)
         location.href = origin.href
-    } else {
-        console.log('not handle origin', origin)
     }
 }
 
+// 重写window.open，强制在当前窗口打开
 window.open = function (url, target, features) {
-    console.log('open', url, target, features)
     location.href = url
 }
 
+// 绑定点击事件拦截
 document.addEventListener('click', hookClick, { capture: true })
