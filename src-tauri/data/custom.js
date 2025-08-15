@@ -14,14 +14,14 @@ function showNotice(message, delay = 0) {
     `;
     notice.textContent = message;
     document.body.appendChild(notice);
-    setTimeout(() => notice.remove(), 15000); // 15秒后自动消失
+    setTimeout(() => notice.remove(), 7000); // 7秒后自动消失
   }, delay);
 }
 
 // 页面加载相关通知
-showNotice("注册之后搜索hhj,选择传说中的管理员,获取帮助", 4000);
+showNotice("本项目完全免费,如果可以的话可以小小的赞助一下", 4000);
 document.addEventListener('DOMContentLoaded', () => {
-  showNotice('页面加载完成！', 500);
+  showNotice('页面加载完成！', 1000);
 });
 
 
